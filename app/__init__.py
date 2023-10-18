@@ -1,11 +1,11 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
 # Flask extension objects instantiation
-# db = SQLAlchemy()
-# executor = Executor()
+db = SQLAlchemy()
 
 # Application Factory
 def create_app():
@@ -14,6 +14,9 @@ def create_app():
     # Configure the flask app instance
     CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
     app.config.from_object(CONFIG_TYPE)
+
+    # Database
+    db.init_app(app)
 
     # Register blueprints
     register_blueprints(app)
